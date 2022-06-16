@@ -6,5 +6,5 @@ CREATE TABLE IF NOT EXISTS contact (
   message VARCHAR,
   created_at VARCHAR DEFAULT CURRENT_TIMESTAMP,
   updated_at VARCHAR DEFAULT CURRENT_TIMESTAMP,
-  user_id BIGINT
+  user_id BIGINT REFERENCES users(id)
 );

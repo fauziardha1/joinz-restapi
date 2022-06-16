@@ -8,12 +8,12 @@ import (
 )
 
 func main() {
-	_, err := db.SetupDB()
+	pgDB, err := db.SetupDB()
 	if err != nil {
 		log.Println("terjadi kesalahan pada setup db")
 	}
 
-	router := api.SetupApi()
+	router := api.SetupApi(pgDB)
 
 	log.Println("We're otw running")
 	err = http.ListenAndServe(":8080", router)
