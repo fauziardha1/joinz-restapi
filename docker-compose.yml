@@ -3,16 +3,16 @@ version: '3.8'
 services:
   db:
     container_name: db
-    image: postgres:alpine
+    image: postgres
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: joinz
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - database_postgres:/var/lib/postgresql/data
     networks:
       - joinz-network
 
@@ -21,7 +21,7 @@ services:
     container_name: api
     # image: golang:1.18.3-alpine
     ports:
-      - "8080:8080"
+      - 8080:8080
     environment:
       - PORT=8080
       - DB_HOST=db
@@ -33,6 +33,11 @@ services:
       - db
     networks:
       - joinz-network
+
+volumes:
+  database_postgres:
+
 networks:
   joinz-network:
     name: joinz-network
+    driver: bridge

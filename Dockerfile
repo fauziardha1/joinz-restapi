@@ -1,4 +1,4 @@
-FROM golang:1.18.3-alpine
+FROM golang
 
 RUN mkdir /app
 
