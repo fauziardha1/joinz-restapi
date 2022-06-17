@@ -11,8 +11,8 @@ services:
       POSTGRES_DB: joinz
     ports:
       - 5432:5432
-    # volumes:
-    #   - database_postgres:/var/lib/postgresql/data
+    volumes:
+      - database_postgres:/var/lib/postgresql/data
     networks:
       - joinz-network
 
@@ -34,8 +34,9 @@ services:
     networks:
       - joinz-network
 
-# volumes:
-#   database_postgres:
+volumes:
+  database_postgres:
+
 
 networks:
   joinz-network:
