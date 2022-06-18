@@ -35,6 +35,7 @@ func CreateNewUser(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
+
 	// get the database from context
 	pgdb, ok := r.Context().Value("DB").(*pg.DB)
 	if !ok {
@@ -85,6 +86,54 @@ func CreateNewUser(w http.ResponseWriter, r *http.Request) {
 		Success: true,
 		Error:   "",
 		User:    user,
+	}
+	_ = json.NewEncoder(w).Encode(res)
+	w.WriteHeader(http.StatusOK)
+	return
+}
+
+// func GetAllUsers is a function that gets all users
+// it takes no parameters
+// it returns a success when the users are retrieved, otherwise it returns an error
+func GetAllUsers(w http.ResponseWriter, r *http.Request) {
+	// get the database from context
+	pgdb, ok := r.Context().Value("DB").(*pg.DB)
+	if !ok {
+		res := &metrics.CreateUserResponse{
+			Success: false,
+			Error:   "failed to get database from context",
+			User:    nil,
+		}
+		err := json.NewEncoder(w).Encode(res)
+		if err != nil {
+			log.Printf("error get database from context: %s\n", err)
+		}
+
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	// get all users from db
+	users, err := db.GetAllUsers(pgdb)
+	if err != nil {
+		res := &metrics.CreateUserResponse{
+			Success: false,
+			Error:   err.Error(),
+			User:    nil,
+		}
+		err = json.NewEncoder(w).Encode(res)
+		if err != nil {
+			log.Printf("error insert data to db: %s\n", err)
+		}
+
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	res := &metrics.GetAllUsersResponse{
+		Success: true,
+		Error:   "",
+		Users:   users,
 	}
 	_ = json.NewEncoder(w).Encode(res)
 	w.WriteHeader(http.StatusOK)

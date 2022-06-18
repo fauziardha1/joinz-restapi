@@ -20,7 +20,7 @@ func SetupApi(pgDB *pg.DB) *chi.Mux {
 
 		r.Post("/", auth.CreateNewUser) // POST /users
 
-		r.Get("/", getAllUser)                    // GET /users/
+		r.Get("/", auth.GetAllUsers)              // GET /users/
 		r.Get("/byemail/{email}", getUserByEmail) // GET /users/byemail/:email
 		r.Get("/byuname/{uname}", getUserByUname) // GET /users/byid/:uname
 		r.Get("/byid/{id}", getUserByID)          // GET /users/byid/:id
@@ -28,6 +28,11 @@ func SetupApi(pgDB *pg.DB) *chi.Mux {
 		r.Put("/{id}", updateUserByID) // PUT /users/:id (update user by id)
 		r.Delete("/{id}", deleteUser)  // DELETE /users/:id
 
+	})
+
+	r.Route("/auth", func(r chi.Router) {
+		r.Post("/register", auth.CreateNewUser) // POST /auth/register
+		// r.Post("/login", auth.Login)            // POST /auth/login
 	})
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {

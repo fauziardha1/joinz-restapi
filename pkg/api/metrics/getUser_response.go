@@ -1,5 +1,7 @@
 package metrics
 
+import "joinz-api/pkg/db"
+
 // GetUserResponse is a struct that represents a response from the get user endpoint
 type GetUserResponse struct {
 	Status    string `json:"status"`
@@ -10,4 +12,10 @@ type GetUserResponse struct {
 	Phone     string `json:"phone"`
 	CreatedAt string `json:"created_at"`
 	UpdatedAt string `json:"updated_at"`
+}
+
+type GetAllUsersResponse struct {
+	Success bool       `json:"success"`
+	Error   string     `json:"error"`
+	Users   []*db.User `json:"users"`
 }

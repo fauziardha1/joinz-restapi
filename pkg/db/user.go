@@ -13,6 +13,9 @@ type User struct {
 	UpdatedAt string `json:"updated_at"`
 }
 
+// func CreateUser is a function that creates a new user
+// it takes a request body of type CreateUserRequest
+// it returns a success when the user is created, otherwise it returns an error
 func CreateUser(db *pg.DB, req *User) (*User, error) {
 
 	// insert new user to db
@@ -30,4 +33,17 @@ func CreateUser(db *pg.DB, req *User) (*User, error) {
 	}
 
 	return user, nil
+}
+
+// func GetUserByID is a function that gets all users
+// it takes no parameters
+// it returns a list of users when success, otherwise it returns an error
+func GetAllUsers(db *pg.DB) ([]*User, error) {
+	var users []*User
+	err := db.Model(&users).Select()
+	if err != nil {
+		return nil, err
+	}
+
+	return users, nil
 }
