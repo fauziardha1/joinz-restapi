@@ -47,3 +47,23 @@ func GetAllUsers(db *pg.DB) ([]*User, error) {
 
 	return users, nil
 }
+
+// func Login is a function that logs in a user
+// it takes a request body of type LoginRequest
+// it returns a success when the user is logged in, otherwise it returns an error
+func GetUserByEmailOrUserName(db *pg.DB, username string, email string) (*User, error) {
+
+	// get the user from db where username or email is equal to the username or email\
+	if username == "" {
+		username = email
+	} else {
+		email = username
+	}
+	user := &User{}
+	err := db.Model(user).Where("uname = ?", username).WhereOr("email = ?", email).Select()
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}

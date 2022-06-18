@@ -24,7 +24,7 @@ Technology Stack:
 ### EndPoint List
 - <http://localhost:8080>
 - auth or user api: <http://localhost:8080/users/>
-- create new user :
+ create new user :
     ```
     POST http://localhost:8080/users/
     ```
@@ -54,4 +54,106 @@ Technology Stack:
         }
     }
     ```
+
+- Get all users: <http://localhost:8080/users/> : 
+    ```
+    GET http://localhost:8080/users/
+    ```
+
+    Request Body:
+    ```   ```
+
+    Response Body:
+    ```
+   {
+    "success": true,
+    "error": "",
+    "users": [
+        {
+        "id": 1,
+        "email": "user1@email.com",
+        "uname": "username1",
+        "password": "yoursecreetpassword",
+        "phone": "+6281234567890",
+        "created_at": "20220618153809",
+        "updated_at": "20220618153809"
+        },
+        {
+        "id": 2,
+        "email": "user2@email.com",
+        "uname": "username2",
+        "password": "yoursecreetpassword",
+        "phone": "+6281234567890",
+        "created_at": "20220618154055",
+        "updated_at": "20220618154055"
+        },
+        
+    ]
+}
+    ```
+    
+
+- Authentication API: <http://localhost:8080/auth/>
+  Register new user : <http://localhost:8080/auth/register>
+  ``` POST http://localhost:8080/auth/register ```
+
+    Request Body:
+    ```
+   {
+        "email": "email@domain.com", // required unique email
+        "uname": "username", 
+        "password": "yoursecreetpassword",
+        "phone": "+6281234567890" // optional
+    }
+    ```
+
+    Response Body:
+    ```
+    {
+        "success": true,
+        "error": "",
+        "user": {
+            "id": 6,
+            "email": "mario@email.com",
+            "uname": "mario",
+            "password": "yoursecreetpassword",
+            "phone": "+6281234567890",
+            "created_at": "20220618191048",
+            "updated_at": "20220618191048"
+        }
+    }
+    ```
+
+- Login API: <http://localhost:8080/auth/login>
+    ``` POST http://localhost:8080/auth/login ```
+
+    Request Body:
+    ```
+    {
+        "email": "registered@email.com", // optional but recommended
+        "username" : "registeredusername", // optional but recommended
+        "password": "yoursecreetpassword"
+    }
+    ```
+
+    Response Body:
+    ```
+    {
+        "success": true,
+        "error": "",
+        "user": {
+            "id": 2,
+            "email": "teo@email.com",
+            "uname": "teo",
+            "password": "yoursecreetpassword",
+            "phone": "+6281234567890",
+            "created_at": "20220618154055",
+            "updated_at": "20220618154055"
+        }
+    }
+    ```
+    
+  
+
+
 cont'd

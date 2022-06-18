@@ -32,7 +32,7 @@ func SetupApi(pgDB *pg.DB) *chi.Mux {
 
 	r.Route("/auth", func(r chi.Router) {
 		r.Post("/register", auth.CreateNewUser) // POST /auth/register
-		// r.Post("/login", auth.Login)            // POST /auth/login
+		r.Post("/login", auth.Login)            // POST /auth/login
 	})
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
