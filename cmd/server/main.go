@@ -13,7 +13,7 @@ func main() {
 		log.Println("terjadi kesalahan pada setup db")
 	}
 
-	router := server.SetupApi(pgDB)
+	router := server.InitApp(pgDB)
 
 	log.Println("We're otw running")
 	err = http.ListenAndServe(":8080", router)

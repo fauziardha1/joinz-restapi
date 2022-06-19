@@ -10,7 +10,7 @@ import (
 	"github.com/go-pg/pg/v10"
 )
 
-func SetupApi(pgDB *pg.DB) *chi.Mux {
+func InitApp(pgDB *pg.DB) *chi.Mux {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger, middleware.WithValue("DB", pgDB))
 
