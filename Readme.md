@@ -152,8 +152,45 @@ Technology Stack:
         }
     }
     ```
-    
-  
+
+- Contacts API: <http://localhost:8080/contacts/>
+- Create new contact: 
+    ``` POST http://localhost:8080/contacts/ ```
+    Request Body:
+    ```
+    {
+        "name": "contact name",
+        "phone": "+6281234567890",
+        "relation": "relation",
+        "user_id": 2 //current user id
+        "profile_picture": "profile picture url" // optional
+        "email": "contactemail@domain.com" // optional
+        "priority": 1 // optional
+    }
+    ```
+
+    Response Body:
+    ```
+    {
+        "success": true,
+        "error": "",
+        "contact": {
+           "id": 1,
+            "user_id": 1,
+            "user": null,
+            "name": "name_placeholder",
+            "email": "",
+            "phone": "+6281234567890",
+            "relationship": "friends",
+            "profile_picture": "",
+            "priorities": 0,
+            "alternative_name": "",
+            "messages": "",
+            "created_at": "20220619193459",
+            "updated_at": "20220619193459"
+        }
+    }
+    ```
 
 
 cont'd
