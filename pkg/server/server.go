@@ -23,15 +23,23 @@ func defineRoutes(r *chi.Mux) *chi.Mux {
 
 	// define route for users endpoint
 	r.Route("/users", func(r chi.Router) {
+		// Post Routes
 		r.Post("/", users.CreateNewUser) // POST /users
 
-		r.Get("/", users.GetAllUsers)                   // GET /users/
+		// Get Routes
+		r.Get("/", users.GetAllUsers) // GET /users/
+		// TODO: implement handler for endpoints below
 		r.Get("/byemail/{email}", users.GetUserByEmail) // GET /users/byemail/:email
 		r.Get("/byuname/{uname}", users.GetUserByUname) // GET /users/byid/:uname
 		r.Get("/byid/{id}", users.GetUserByID)          // GET /users/byid/:id
 
+		// TODO: implement handler for endpoints below
+		// Put Routes
 		r.Put("/{id}", users.UpdateUserByID) // PUT /users/:id (update user by id)
-		r.Delete("/{id}", users.DeleteUser)  // DELETE /users/:id
+
+		// TODO: implement handler for endpoints below
+		// Delete Routes
+		r.Delete("/{id}", users.DeleteUser) // DELETE /users/:id
 
 	})
 
@@ -48,7 +56,7 @@ func defineRoutes(r *chi.Mux) *chi.Mux {
 	})
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello World!"))
+		w.Write([]byte("Welcome to JOINZ API!!\nIt's creates by JOINZ team:\n\t-Devon\n\t-fauziarda\n\t-Heri\n\t-Rafi\n\t-Ricky \nPlease use /docs to see the available endpoints\nhttps://github.com/fauziardha1/joinz-restapi"))
 	})
 
 	return r

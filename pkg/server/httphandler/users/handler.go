@@ -98,10 +98,10 @@ func GetAllUsers(w http.ResponseWriter, r *http.Request) {
 	// get the database from context
 	pgdb, ok := r.Context().Value("DB").(*pg.DB)
 	if !ok {
-		res := &entity.CreateUserResponse{
+		res := &entity.GetAllUsersResponse{
 			Success: false,
 			Error:   "failed to get database from context",
-			User:    nil,
+			Users:   []*db.User{},
 		}
 		err := json.NewEncoder(w).Encode(res)
 		if err != nil {
@@ -115,10 +115,10 @@ func GetAllUsers(w http.ResponseWriter, r *http.Request) {
 	// get all users from db
 	users, err := db.GetAllUsers(pgdb)
 	if err != nil {
-		res := &entity.CreateUserResponse{
+		res := &entity.GetAllUsersResponse{
 			Success: false,
 			Error:   err.Error(),
-			User:    nil,
+			Users:   []*db.User{},
 		}
 		err = json.NewEncoder(w).Encode(res)
 		if err != nil {
@@ -129,6 +129,10 @@ func GetAllUsers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if users == nil || len(users) == 0 {
+		users = []*db.User{}
+	}
+
 	res := &entity.GetAllUsersResponse{
 		Success: true,
 		Error:   "",
@@ -137,10 +141,6 @@ func GetAllUsers(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewEncoder(w).Encode(res)
 	w.WriteHeader(http.StatusOK)
 	return
-}
-
-func GetAllUser(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("get all user"))
 }
 
 // func getUserByEmail is a function that gets a user by email

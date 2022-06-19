@@ -2,22 +2,38 @@ package db
 
 import (
 	"fmt"
+	"log"
+	"os"
+
 	"github.com/go-pg/migrations/v8"
 	"github.com/go-pg/pg/v10"
-	"log"
 )
 
 func SetupDB() (*pg.DB, error) {
+	var opts *pg.Options
+	var err error
+
+	if os.Getenv("ENV") == "PROD" {
+		opts, err = pg.ParseURL(os.Getenv("DATABASE_URL"))
+		if err != nil {
+			return nil, err
+		}
+
+	} else {
+		opts = &pg.Options{
+			Addr:     "db:5432",
+			User:     "postgres",
+			Password: "postgres",
+			Database: "postgres",
+		}
+	}
+
 	// connect to db
-	db := pg.Connect(&pg.Options{
-		Addr:     "db:5432",
-		User:     "postgres",
-		Password: "postgres",
-	})
+	db := pg.Connect(opts)
 
 	// run migrations
 	collection := migrations.NewCollection()
-	err := collection.DiscoverSQLMigrations("migrations")
+	err = collection.DiscoverSQLMigrations("migrations")
 	if err != nil {
 		log.Println("DB error on DiscoverSQLMigrations")
 		log.Printf("error nya adalah %s\n", err.Error())

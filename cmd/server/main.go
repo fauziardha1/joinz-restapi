@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"joinz-api/pkg/repository/db"
 	"joinz-api/pkg/server"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -15,8 +17,9 @@ func main() {
 
 	router := server.InitApp(pgDB)
 
-	log.Println("We're otw running")
-	err = http.ListenAndServe(":8080", router)
+	log.Println("We're up and running")
+	port := os.Getenv("PORT")
+	err = http.ListenAndServe(fmt.Sprintf(":%s", port), router)
 	if err != nil {
 		log.Printf("ListenAndServe: %v\n", err)
 	}
