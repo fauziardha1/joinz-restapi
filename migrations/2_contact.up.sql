@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS contact (
   phone VARCHAR NOT NULL,
   messages VARCHAR,
   relationship VARCHAR,
-  priorities INT ,
+  priorities INT , 
   profile_picture VARCHAR,
   alternative_name  VARCHAR,
   created_at VARCHAR DEFAULT CURRENT_TIMESTAMP,

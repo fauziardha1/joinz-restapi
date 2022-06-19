@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
   first_name VARCHAR,
   last_name VARCHAR,
   nickname VARCHAR,
+  isOnline BOOLEAN DEFAULT FALSE,
   user_address VARCHAR,
   created_at VARCHAR DEFAULT CURRENT_TIMESTAMP,
   updated_at VARCHAR DEFAULT CURRENT_TIMESTAMP
