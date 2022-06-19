@@ -21,3 +21,15 @@ type CreateContactResponse struct {
 	Error   string `json:"error,omitempty"`
 	Contact *db.Contact
 }
+
+// GetContactByUserIDRequest is a struct that represents a request to get a contact by user id
+type GetContactByUserIDRequest struct {
+	UserID int64 `json:"user_id"`
+}
+
+// GetContactByUserIDResponse is a struct that represents a response to get a contacts by user id
+type GetContactByUserIDResponse struct {
+	Success  bool   `json:"success"`
+	Error    string `json:"error,omitempty"`
+	Contacts []*db.Contact
+}

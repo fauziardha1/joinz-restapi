@@ -28,3 +28,18 @@ func CreateContact(db *pg.DB, req *Contact) (*Contact, error) {
 
 	return contact, nil
 }
+
+// function GetContactsByUserID is a function that gets a contacts by user id
+// it takes a user id as a parameter
+// it returns a list of contacts
+func GetContactsByUserID(db *pg.DB, userID string) ([]*Contact, error) {
+	contacts := []*Contact{}
+	// get contacts by user id
+	err := db.Model(&contacts).Where("user_id = ?", userID).Select()
+	if err != nil {
+		log.Printf("error getting contacts by user id: %s\n", err)
+		return nil, err
+	}
+
+	return contacts, nil
+}

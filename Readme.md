@@ -191,6 +191,35 @@ Technology Stack:
         }
     }
     ```
+- Get contacts by current user id: 
+    ``` GET http://localhost:8080/contacts/1```
+    Request Body:
+    ```
+    no body required
+    ```
 
+    Response Body:
+    ```
+    {
+        "success": true,
+        "Contacts": [
+            {
+                "id": 1,
+                "user_id": 1,
+                "user": null,
+                "name": "name_placeholder",
+                "email": "",
+                "phone": "+6281234567890",
+                "relationship": "friends",
+                "profile_picture": "",
+                "priorities": 0,
+                "alternative_name": "",
+                "messages": "",
+                "created_at": "20220619193459",
+                "updated_at": "20220619193459"
+            }
+        ]
+    }
+    ```
 
 cont'd
