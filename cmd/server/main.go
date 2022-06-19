@@ -1,8 +1,8 @@
 package main
 
 import (
-	"joinz-api/pkg/api"
-	"joinz-api/pkg/db"
+	"joinz-api/pkg/repository/db"
+	"joinz-api/pkg/server"
 	"log"
 	"net/http"
 )
@@ -13,7 +13,7 @@ func main() {
 		log.Println("terjadi kesalahan pada setup db")
 	}
 
-	router := api.SetupApi(pgDB)
+	router := server.SetupApi(pgDB)
 
 	log.Println("We're otw running")
 	err = http.ListenAndServe(":8080", router)

@@ -1,4 +1,4 @@
-package metrics
+package entity
 
 // DeleteUserResponse is a struct that represents a response from the delete user endpoint
 type DeleteUserResponse struct {

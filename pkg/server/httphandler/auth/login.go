@@ -3,8 +3,8 @@ package auth
 import (
 	"encoding/json"
 	"fmt"
-	"joinz-api/pkg/api/metrics"
-	"joinz-api/pkg/db"
+	"joinz-api/pkg/entity"
+	"joinz-api/pkg/repository/db"
 	"log"
 	"net/http"
 
@@ -14,10 +14,10 @@ import (
 // Login is a function that logs in a user
 func Login(w http.ResponseWriter, r *http.Request) {
 	// parse request body
-	req := &metrics.LoginRequest{}
+	req := &entity.LoginRequest{}
 	err := json.NewDecoder(r.Body).Decode(req)
 	if err != nil {
-		res := &metrics.LoginResponse{
+		res := &entity.LoginResponse{
 			Success: false,
 			Error:   err.Error(),
 			User:    nil,
@@ -33,7 +33,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	// check if username and email is empty
 	if req.Email == "" && req.UserName == "" {
-		res := &metrics.LoginResponse{
+		res := &entity.LoginResponse{
 			Success: false,
 			Error:   "email or username is not allowed to be empty",
 			User:    nil,
@@ -50,7 +50,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	// get the database from context
 	pgdb, ok := r.Context().Value("DB").(*pg.DB)
 	if !ok {
-		res := &metrics.CreateUserResponse{
+		res := &entity.CreateUserResponse{
 			Success: false,
 			Error:   err.Error(),
 			User:    nil,
@@ -67,7 +67,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	// get the user by email or username
 	user, err := db.GetUserByEmailOrUserName(pgdb, req.Email, req.UserName)
 	if err != nil {
-		res := &metrics.LoginResponse{
+		res := &entity.LoginResponse{
 			Success: false,
 			Error:   fmt.Sprintf("error getting user by email or username: %s, %s, %s", err, req.Email, req.UserName),
 			User:    nil,
@@ -84,7 +84,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	// check if user is nil
 	if user == nil {
-		res := &metrics.LoginResponse{
+		res := &entity.LoginResponse{
 			Success: false,
 			Error:   "username or password is incorrect (user not found)",
 			User:    nil,
@@ -100,7 +100,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	// check if password is correct
 	if user.Password != req.Password {
-		res := &metrics.LoginResponse{
+		res := &entity.LoginResponse{
 			Success: false,
 			Error:   "username or password is incorrect",
 			User:    nil,
@@ -116,7 +116,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// return the user
-	res := &metrics.LoginResponse{
+	res := &entity.LoginResponse{
 		Success: true,
 		Error:   "",
 		User:    user,
@@ -124,5 +124,4 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewEncoder(w).Encode(res)
 	w.WriteHeader(http.StatusOK)
 	return
-
 }

@@ -1,6 +1,6 @@
-package metrics
+package entity
 
-import "joinz-api/pkg/db"
+import "joinz-api/pkg/repository/db"
 
 type LoginRequest struct {
 	Email    string `json:"email,omitempty"`

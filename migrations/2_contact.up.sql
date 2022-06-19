@@ -12,3 +12,4 @@ CREATE TABLE IF NOT EXISTS contact (
   updated_at VARCHAR DEFAULT CURRENT_TIMESTAMP,
   user_id BIGINT REFERENCES users(id)
 );
+

@@ -1,4 +1,4 @@
-package metrics
+package entity
 
 // UpdateUserResponse is a struct that represents a response from the update user endpoint
 type UpdateUserResponse struct {

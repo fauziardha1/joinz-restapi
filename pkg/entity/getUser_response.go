@@ -1,6 +1,6 @@
-package metrics
+package entity
 
-import "joinz-api/pkg/db"
+import "joinz-api/pkg/repository/db"
 
 // GetUserResponse is a struct that represents a response from the get user endpoint
 type GetUserResponse struct {
