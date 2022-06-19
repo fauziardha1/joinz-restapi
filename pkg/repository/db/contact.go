@@ -1,17 +1,30 @@
 package db
 
-type Contact struct {
-	ID              int64  `json:"id"`
-	UserID          int64  `json:"user_id"`
-	User            *User  `pg:"rel:has-one" json:"user"`
-	Name            string `json:"name"`
-	Email           string `json:"email"`
-	Phone           string `json:"phone"`
-	Relationship    string `json:"relationship"`
-	ProfilePicture  string `json:"profile_picture"`
-	Priorities      string `json:"priorities"`
-	AlternativeName string `json:"alternative_name"`
-	Messages        string `json:"messages"`
-	CreatedAt       string `json:"created_at"`
-	UpdatedAt       string `json:"updated_at"`
+import (
+	"log"
+
+	"github.com/go-pg/pg/v10"
+)
+
+// func CreateContact is a function that creates a new contact
+// it takes a request body of type CreateContactRequest
+// it returns a success when the contact is created, otherwise it returns an error
+func CreateContact(db *pg.DB, req *Contact) (*Contact, error) {
+
+	// insert new contact to db
+	_, err := db.Model(req).Insert()
+	if err != nil {
+		log.Printf("error inserting contact: %s\n", err)
+		return nil, err
+	}
+
+	// get the new contact from db
+	// Select contact by primary key.
+	contact := &Contact{ID: req.ID}
+	err = db.Model(contact).WherePK().Select()
+	if err != nil {
+		return nil, err
+	}
+
+	return contact, nil
 }

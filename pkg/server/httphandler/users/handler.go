@@ -17,8 +17,6 @@ import (
 // it takes a request body of type CreateUserRequest
 // it returns a success when the user is created, otherwise it returns an error
 func CreateNewUser(w http.ResponseWriter, r *http.Request) {
-	// w.Write([]byte("create new user"))
-
 	// parse request body
 	req := &entity.CreateUserRequest{}
 	err := json.NewDecoder(r.Body).Decode(req)
